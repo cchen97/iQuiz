@@ -12,6 +12,9 @@
 		B1C059D9221354F90074D9A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C059D7221354F90074D9A2 /* Main.storyboard */; };
 		B1C059DB221354FB0074D9A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1C059DA221354FB0074D9A2 /* Assets.xcassets */; };
 		B1C059DE221354FB0074D9A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C059DC221354FB0074D9A2 /* LaunchScreen.storyboard */; };
+		B1F50A802219D5C200E2CA1F /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = B1F50A7D2219D5C200E2CA1F /* 1.png */; };
+		B1F50A812219D5C200E2CA1F /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = B1F50A7E2219D5C200E2CA1F /* 3.png */; };
+		B1F50A822219D5C200E2CA1F /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = B1F50A7F2219D5C200E2CA1F /* 2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		B1C059DA221354FB0074D9A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1C059DD221354FB0074D9A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B1C059DF221354FB0074D9A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1F50A7D2219D5C200E2CA1F /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1.png; path = img/1.png; sourceTree = SOURCE_ROOT; };
+		B1F50A7E2219D5C200E2CA1F /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 3.png; path = img/3.png; sourceTree = SOURCE_ROOT; };
+		B1F50A7F2219D5C200E2CA1F /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2.png; path = img/2.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,9 @@
 				B1C059DA221354FB0074D9A2 /* Assets.xcassets */,
 				B1C059DC221354FB0074D9A2 /* LaunchScreen.storyboard */,
 				B1C059DF221354FB0074D9A2 /* Info.plist */,
+				B1F50A7D2219D5C200E2CA1F /* 1.png */,
+				B1F50A7F2219D5C200E2CA1F /* 2.png */,
+				B1F50A7E2219D5C200E2CA1F /* 3.png */,
 			);
 			path = iQuiz;
 			sourceTree = "<group>";
@@ -122,7 +131,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1F50A822219D5C200E2CA1F /* 2.png in Resources */,
+				B1F50A812219D5C200E2CA1F /* 3.png in Resources */,
 				B1C059DE221354FB0074D9A2 /* LaunchScreen.storyboard in Resources */,
+				B1F50A802219D5C200E2CA1F /* 1.png in Resources */,
 				B1C059DB221354FB0074D9A2 /* Assets.xcassets in Resources */,
 				B1C059D9221354F90074D9A2 /* Main.storyboard in Resources */,
 			);
