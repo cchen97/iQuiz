@@ -14,14 +14,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var quizDetails = ["Challenge yourself with math questions!", "Come have fun with superhero questions!", "Love science? Try our science questions!"]
     var images : [UIImage] = [UIImage(named: "1.png")!,UIImage(named: "2.png")!,UIImage(named: "3.png")! ]
     
-    var quizType = ""
+    var quizType = 0
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let Question = segue.destination as! Question
-        Question.type = quizType
-        Question.currentQuestion = 0
-        
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "Question" {
+//            let Question = segue.destination as! Question
+//            Question.type = quizType
+//            Question.currentQuestion = 0
+//        }
+////        let Question = segue.destination as! Question
+////        Question.type = quizType
+////        Question.currentQuestion = 0
+//
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quizzes.count
@@ -43,16 +48,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let destination = storyboard.instantiateViewController(withIdentifier: "Question") as! Question
-        switch indexPath.row {
-        case 0:
-            quizType = "Math"
-        case 1:
-            quizType = "Superhero"
-        default:
-            quizType = "Science"
-        }
+        quizType = indexPath.row
+        destination.type = quizType
+        destination.currentQuestion = 0
             self.present(destination, animated: true, completion: nil)
-            
+        
     }
     
     override func didReceiveMemoryWarning() {

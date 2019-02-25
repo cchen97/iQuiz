@@ -10,17 +10,14 @@ import UIKit
 
 class Question: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var questions = ["Question1", "Question2"]
+    var question = ""
     var choices = ["A", "B", "C", "D"]
-    var type = ""
+    var type = 0
     var currentQuestion = 0
+    var correctAnswer = 0
     var userChoice = 0
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let Answer = segue.destination as! Answer
-        Answer.currQuestion = currentQuestion
-        Answer.choice = userChoice
-    }
+    var questionCount = 0
+    var correctCount = 0
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return choices.count
@@ -37,10 +34,39 @@ class Question: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell!
     }
     
+    struct Quizzes: Decodable {
+        var title: String
+        var desc: String
+        var questions: [Questions]
+    }
+    struct Questions: Decodable {
+        var text: String
+        var answer: String
+        var answers: [String]
+    }
+    func loadJson(filename fileName: String) {
+        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let quizzes = try decoder.decode([Quizzes].self, from: data)
+                question = quizzes[type].questions[currentQuestion].text
+                choices = quizzes[type].questions[currentQuestion].answers
+                correctAnswer = Int(quizzes[type].questions[currentQuestion].answer) ?? 0
+                questionCount = quizzes[type].questions.count
+            } catch {
+                print("error:\(error)")
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.popViewController(animated: false)
+        loadJson(filename: "questions")
         let questionText = UILabel(frame: CGRect(x: 50, y: 50, width: 200, height: 200))
-        questionText.text = questions[currentQuestion]
+        questionText.text = question
         let rect = CGRect(x: 0, y: 200, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
         let tableView = UITableView(frame: rect)
         tableView.tableFooterView = UIView(frame: .zero)
@@ -59,11 +85,18 @@ class Question: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @objc func pressedAction(_ sender: UIButton) {
         let destination = self.storyboard?.instantiateViewController(withIdentifier: "Answer") as! Answer
+        destination.currQuestion = currentQuestion
+        destination.choice = userChoice
+        destination.correctNumber = correctAnswer
+        destination.questions = question
+        destination.qCount = questionCount
+        destination.quizType = type
+        destination.totalCorrect = correctCount
         self.present(destination, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        userChoice = indexPath.row
+        userChoice = indexPath.row + 1
     }
 
 }
