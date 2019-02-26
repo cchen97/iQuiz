@@ -18,6 +18,9 @@ class Question: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var userChoice = 0
     var questionCount = 0
     var correctCount = 0
+    var custom = false
+    var URL = "https://tednewardsandbox.site44.com/questions.json"
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return choices.count
@@ -45,25 +48,28 @@ class Question: UIViewController, UITableViewDelegate, UITableViewDataSource {
         var answers: [String]
     }
     func loadJson(filename fileName: String) {
-        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                let quizzes = try decoder.decode([Quizzes].self, from: data)
-                question = quizzes[type].questions[currentQuestion].text
-                choices = quizzes[type].questions[currentQuestion].answers
-                correctAnswer = Int(quizzes[type].questions[currentQuestion].answer) ?? 0
-                questionCount = quizzes[type].questions.count
-            } catch {
-                print("error:\(error)")
-            }
+        var qUrl: URL?
+        if (!custom) {
+            qUrl = Bundle.main.url(forResource: fileName, withExtension: "json")
+        } else {
+            qUrl = NSURL(string: URL)! as URL
+        }
+        do {
+            let data = try Data(contentsOf: qUrl!)
+            let decoder = JSONDecoder()
+            let quizzes = try decoder.decode([Quizzes].self, from: data)
+            question = quizzes[type].questions[currentQuestion].text
+            choices = quizzes[type].questions[currentQuestion].answers
+            correctAnswer = Int(quizzes[type].questions[currentQuestion].answer) ?? 0
+            questionCount = quizzes[type].questions.count
+        } catch {
+            print("error:\(error)")
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.popViewController(animated: false)
         loadJson(filename: "questions")
         let questionText = UILabel(frame: CGRect(x: 50, y: 50, width: 200, height: 200))
         questionText.text = question

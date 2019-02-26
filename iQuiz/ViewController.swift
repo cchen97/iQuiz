@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Foundation
+import SystemConfiguration
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -15,18 +17,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var images : [UIImage] = [UIImage(named: "1.png")!,UIImage(named: "2.png")!,UIImage(named: "3.png")! ]
     
     var quizType = 0
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "Question" {
-//            let Question = segue.destination as! Question
-//            Question.type = quizType
-//            Question.currentQuestion = 0
-//        }
-////        let Question = segue.destination as! Question
-////        Question.type = quizType
-////        Question.currentQuestion = 0
-//
-//    }
+    var url = "https://tednewardsandbox.site44.com/questions.json"
+    var customURL = false
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quizzes.count
@@ -51,6 +43,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         quizType = indexPath.row
         destination.type = quizType
         destination.currentQuestion = 0
+        destination.URL = url
+        destination.custom = customURL
             self.present(destination, animated: true, completion: nil)
         
     }
@@ -62,6 +56,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 50, width: self.view.bounds.size.width, height: 50))
+        self.view.addSubview(toolBar)
+        let settings = UIBarButtonItem(title: "Settings", style: UIBarButtonItem.Style.plain, target: self, action: #selector(alert(_:)))
+        toolBar.setItems([settings], animated: false)
         let rect = CGRect(x: 0, y: 150, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
         let tableView = UITableView(frame: rect)
         tableView.tableFooterView = UIView(frame: .zero)
@@ -72,14 +70,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     @IBAction func alert(_ sender: Any) {
-        let alert = UIAlertController(title: "My Alert", message: "Settings go here", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-            NSLog("The \"OK\" alert occured.")
-        }))
-
+        let alert = UIAlertController(title: "Enter URL", message: "Enter url to download quiz", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "Enter URL"
+            textField.textAlignment = .center
+        }
+        alert.addAction(UIAlertAction(title: "Check now", style: .destructive, handler: {(a: UIAlertAction!) in
+            if !self.isInternetAvailable() {
+                    alert.title = "No internet available"
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                        print("Canelled")
+                    })
+                } else {
+                    let textField = alert.textFields?.first
+                self.url = textField?.text ?? ""
+                    self.customURL = true
+                    print("url received")
+                }
+            }
+        ))
         self.present(alert, animated: true, completion: {
             print("This is hte completion handler for the present() code")
         })
+    }
+    
+    func isInternetAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
     }
     
  
