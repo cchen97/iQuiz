@@ -98,6 +98,7 @@ class Question: UIViewController, UITableViewDelegate, UITableViewDataSource {
         destination.qCount = questionCount
         destination.quizType = type
         destination.totalCorrect = correctCount
+        destination.url = URL
         self.present(destination, animated: true, completion: nil)
     }
     

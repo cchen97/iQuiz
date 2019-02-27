@@ -11,6 +11,7 @@ import UIKit
 class Finished: UIViewController {
     var correct = 0
     var totalQuestions = 0
+    var URL = "https://tednewardsandbox.site44.com/questions.json"
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +31,7 @@ class Finished: UIViewController {
     }
     @objc func pressedAction(_ sender: UIButton) {
          let destination = self.storyboard?.instantiateViewController(withIdentifier: "Start") as! ViewController
+        destination.url = URL
         self.present(destination, animated: true, completion: nil)
     }
     

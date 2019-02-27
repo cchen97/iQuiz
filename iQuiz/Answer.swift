@@ -17,11 +17,7 @@ class Answer: UIViewController {
     var qCount = 0
     var quizType = 0
     var totalCorrect = 0
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let Question = segue.destination as! Question
-//        Question.currentQuestion = currQuestion + 1
-//    }
+    var url = "https://tednewardsandbox.site44.com/questions.json"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +56,7 @@ class Answer: UIViewController {
             destination.currentQuestion = currQuestion + 1
             destination.type = quizType
             destination.correctCount = totalCorrect
+            destination.URL = url
             self.present(destination, animated: true, completion: nil)
         }
     }
