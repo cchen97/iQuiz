@@ -66,6 +66,7 @@ class Answer: UIViewController {
             let destination = self.storyboard?.instantiateViewController(withIdentifier: "Finished") as! Finished
             destination.correct = totalCorrect
             destination.totalQuestions = qCount
+            destination.URL = url
             self.present(destination, animated: true, completion: nil)
         } else {
             let destination = self.storyboard?.instantiateViewController(withIdentifier: "Question") as! Question
