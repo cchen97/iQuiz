@@ -21,22 +21,38 @@ class Answer: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let questionText = UILabel(frame: CGRect(x: 50, y: 50, width: 200, height: 200))
+        let questionText = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
         questionText.text = questions
-       let correctAnswer = UILabel(frame: CGRect(x: 50, y: 300, width: 200, height: 200))
+        questionText.translatesAutoresizingMaskIntoConstraints = true
+        questionText.center = CGPoint(x: view.bounds.midX, y: 50)
+        questionText.autoresizingMask = [UIView.AutoresizingMask.flexibleLeftMargin, UIView.AutoresizingMask.flexibleRightMargin, UIView.AutoresizingMask.flexibleTopMargin, UIView.AutoresizingMask.flexibleBottomMargin]
+       
+        let correctAnswer = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         let correctAnswerText = "The correct answer is " + String(correctNumber)
         correctAnswer.text = correctAnswerText
-       let result = UILabel(frame: CGRect(x: 50, y: 400, width: 500, height: 100))
+        correctAnswer.translatesAutoresizingMaskIntoConstraints = true
+        correctAnswer.center = CGPoint(x: view.bounds.midX, y: 100)
+        correctAnswer.autoresizingMask = [UIView.AutoresizingMask.flexibleLeftMargin, UIView.AutoresizingMask.flexibleRightMargin, UIView.AutoresizingMask.flexibleTopMargin, UIView.AutoresizingMask.flexibleBottomMargin]
+        
+       let result = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 50))
         if choice == correctNumber {
             result.text = "Congradulations! You got it right!"
             totalCorrect = totalCorrect + 1
         } else {
             result.text = "Oh no you missed it!"
         }
-        let nextButton = UIButton(frame: CGRect(x: 50, y: 500, width: 200, height: 200))
+        result.translatesAutoresizingMaskIntoConstraints = true
+        result.center = CGPoint(x: view.bounds.midX, y: 150)
+        result.autoresizingMask = [UIView.AutoresizingMask.flexibleLeftMargin, UIView.AutoresizingMask.flexibleRightMargin, UIView.AutoresizingMask.flexibleTopMargin, UIView.AutoresizingMask.flexibleBottomMargin]
+        
+        
+        let nextButton = UIButton(frame: CGRect(x: 0, y: 00, width: 200, height: 200))
         nextButton.setTitle("Next", for: .normal)
         nextButton.setTitleColor(UIColor.blue, for: .normal)
         nextButton.addTarget(self, action: #selector(pressedAction(_:)), for: .touchUpInside)
+        nextButton.translatesAutoresizingMaskIntoConstraints = true
+        nextButton.center = CGPoint(x: view.bounds.midX, y: 250)
+        nextButton.autoresizingMask = [UIView.AutoresizingMask.flexibleLeftMargin, UIView.AutoresizingMask.flexibleRightMargin, UIView.AutoresizingMask.flexibleTopMargin, UIView.AutoresizingMask.flexibleBottomMargin]
         self.view.addSubview(questionText)
         self.view.addSubview((correctAnswer))
         
