@@ -56,11 +56,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 50, width: self.view.bounds.size.width, height: 50))
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 50))
         self.view.addSubview(toolBar)
+        toolBar.translatesAutoresizingMaskIntoConstraints = true
+        toolBar.center = CGPoint(x: view.bounds.midX, y: 50)
+        toolBar.autoresizingMask = [UIView.AutoresizingMask.flexibleLeftMargin, UIView.AutoresizingMask.flexibleRightMargin, UIView.AutoresizingMask.flexibleTopMargin, UIView.AutoresizingMask.flexibleBottomMargin]
+        
         let settings = UIBarButtonItem(title: "Settings", style: UIBarButtonItem.Style.plain, target: self, action: #selector(alert(_:)))
         toolBar.setItems([settings], animated: false)
-        let rect = CGRect(x: 0, y: 150, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+        let rect = CGRect(x: 0, y: 100, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
         let tableView = UITableView(frame: rect)
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.delegate = self

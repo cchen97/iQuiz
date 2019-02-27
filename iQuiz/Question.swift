@@ -71,15 +71,23 @@ class Question: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         
         loadJson(filename: "questions")
-        let questionText = UILabel(frame: CGRect(x: 50, y: 50, width: 200, height: 200))
+        let questionText = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        questionText.translatesAutoresizingMaskIntoConstraints = true
+        questionText.center = CGPoint(x: view.bounds.midX, y: 50)
+        questionText.autoresizingMask = [UIView.AutoresizingMask.flexibleLeftMargin, UIView.AutoresizingMask.flexibleRightMargin, UIView.AutoresizingMask.flexibleTopMargin, UIView.AutoresizingMask.flexibleBottomMargin]
         questionText.text = question
-        let rect = CGRect(x: 0, y: 200, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+        questionText.textColor = UIColor.blue
+        
+        let rect = CGRect(x: 0, y: 100, width: self.view.bounds.size.width, height: view.bounds.size.height)
         let tableView = UITableView(frame: rect)
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.delegate = self
         tableView.dataSource = self
         
-        let submitButton = UIButton(frame: CGRect(x: 200, y: 500, width: 200, height: 200))
+        let submitButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        submitButton.translatesAutoresizingMaskIntoConstraints = true
+        submitButton.center = CGPoint(x: view.bounds.midX, y: 300)
+        submitButton.autoresizingMask = [UIView.AutoresizingMask.flexibleLeftMargin, UIView.AutoresizingMask.flexibleRightMargin, UIView.AutoresizingMask.flexibleTopMargin, UIView.AutoresizingMask.flexibleBottomMargin]
         submitButton.setTitle("Submit", for: .normal)
         submitButton.setTitleColor(UIColor.blue, for: .normal)
         submitButton.addTarget(self, action: #selector(pressedAction(_:)), for: .touchUpInside)
